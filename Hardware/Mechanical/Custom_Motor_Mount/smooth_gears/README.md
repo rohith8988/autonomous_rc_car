@@ -16,8 +16,10 @@ mix a spur gear with a herringbone gear.
 ## Files
 
 - `output/X2212_Smooth_Spur_Gear_1_14T.stl`
+- `output/X2212_Smooth_Spur_Gear_1_14T_M3_Clamp.stl`
 - `output/X2212_Smooth_Spur_Gear_2_42T.stl`
 - `output/X2212_Smooth_Herringbone_Gear_1_14T.stl`
+- `output/X2212_Smooth_Herringbone_Gear_1_14T_M3_Clamp.stl`
 - `output/X2212_Smooth_Herringbone_Gear_2_42T.stl`
 - `X2212_Smooth_Gear_Sets.scad` — editable parametric source
 
@@ -34,13 +36,35 @@ a small perceptible amount of backlash. If necessary, move the motor only
 
 Run the first powered test with the wheels unloaded and at very low throttle.
 
+## M3 clamp pinions
+
+If an M6 retaining nut is unavailable, use the matching `_M3_Clamp` pinion.
+Its 8 mm tooth section fits the smooth motor boss and its 6 mm outer collar
+clamps around the M6 threaded section. Each pinion uses **two M3x8 socket-head
+screws** positioned opposite each other for balance. No M3 nuts are required.
+
+1. Before fitting the motor, carefully drive each M3 screw into its 2.8 mm pilot
+   hole to form the printed thread, then remove it.
+2. Install the pinion with its tooth face toward the motor. Slide it on until
+   the 8 mm tooth section seats against the rotating motor face and the clamp
+   collar surrounds the M6 threaded section.
+3. Reinstall both screws and tighten them alternately in quarter turns until the
+   pinion cannot slip or slide by hand.
+4. Stop as soon as the pinion is secure. Over-tightening can strip the printed
+   thread or crack the flexure bridges.
+
+The screw heads must sit completely inside their counterbores. Always install
+both screws; running with only one would unbalance the pinion at motor speed.
+
 ## Export
 
 Run from this directory:
 
 ```sh
 openscad --export-format binstl -o output/X2212_Smooth_Spur_Gear_1_14T.stl -D 'part="spur_pinion"' X2212_Smooth_Gear_Sets.scad
+openscad --export-format binstl -o output/X2212_Smooth_Spur_Gear_1_14T_M3_Clamp.stl -D 'part="spur_pinion_m3"' X2212_Smooth_Gear_Sets.scad
 openscad --export-format binstl -o output/X2212_Smooth_Spur_Gear_2_42T.stl -D 'part="spur_gear2"' X2212_Smooth_Gear_Sets.scad
 openscad --export-format binstl -o output/X2212_Smooth_Herringbone_Gear_1_14T.stl -D 'part="herringbone_pinion"' X2212_Smooth_Gear_Sets.scad
+openscad --export-format binstl -o output/X2212_Smooth_Herringbone_Gear_1_14T_M3_Clamp.stl -D 'part="herringbone_pinion_m3"' X2212_Smooth_Gear_Sets.scad
 openscad --export-format binstl -o output/X2212_Smooth_Herringbone_Gear_2_42T.stl -D 'part="herringbone_gear2"' X2212_Smooth_Gear_Sets.scad
 ```

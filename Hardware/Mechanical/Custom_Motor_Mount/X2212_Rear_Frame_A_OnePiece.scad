@@ -23,8 +23,8 @@ $fn = 96;
 
 part = "mount"; // mount, pinion, motor_pattern_test, boss_fit_gauge, preview
 
-original_frame = "../Single Pieces/Single Pieces/DKS-Basic_DukeDoks_Rear-Frame_R_A.stl";
-original_pinion = "../Single Pieces/Single Pieces/DKS-Basic_DukeDoks_Gear-1_A.stl";
+original_frame = "../DKS_Basic_Chassis/STL/DKS-Basic_DukeDoks_Rear-Frame_R_A.stl";
+original_pinion = "../DKS_Basic_Chassis/STL/DKS-Basic_DukeDoks_Gear-1_A.stl";
 
 // Coordinates reverse-engineered from the original Rear-Frame_R_A STL.
 // The 14/42 tooth pair has an approximately 28.9 mm pitch-centre distance.

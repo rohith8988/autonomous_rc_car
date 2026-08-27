@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm"
+     viewBox="0 0 1680 1188" role="img"
+     aria-labelledby="diagram-title diagram-description">
+  <title id="diagram-title">DKS-Basic ESP32 RC Car Version 1 electrical diagram</title>
+  <desc id="diagram-description">Simplified monochrome schematic of the power and control
+  wiring: 3S LiPo, bidirectional 50 A brushless ESC, SunnySky X2212 motor, ESP32,
+  MG90S steering servo and Bluetooth PS4 controller.</desc>
+
+  <defs>
+    <style>
+      text     { font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", Roboto, sans-serif; fill: #000; }
+      .page    { fill: #fff; }
+      .border  { fill: none; stroke: #000; stroke-width: 2; }
+      .frame   { fill: none; stroke: #000; stroke-width: 1; }
+      .bar     { fill: #000; }
+      .section { fill: none; stroke: #000; stroke-width: 1.4; }
+      .box     { fill: #fff; stroke: #000; stroke-width: 2; }
+      .sub     { fill: #f4f4f4; stroke: #000; stroke-width: 1; }
+      .sym     { fill: none; stroke: #000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .symf    { fill: #000; stroke: none; }
+      .node    { fill: #000; stroke: none; }
+
+      .w-pwr   { fill: none; stroke: #000; stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
+      .w-5v    { fill: none; stroke: #000; stroke-width: 2.2; stroke-dasharray: 2 4; stroke-linecap: round; }
+      .w-sig   { fill: none; stroke: #000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+      .w-radio { fill: none; stroke: #000; stroke-width: 1.5; stroke-dasharray: 8 6; }
+
+      .h-title { font-size: 31px; font-weight: 700; fill: #fff; letter-spacing: 0.5px; }
+      .h-sub   { font-size: 14px; font-weight: 400; fill: #fff; }
+      .sec     { font-size: 13px; font-weight: 700; fill: #fff; letter-spacing: 1.5px; }
+      .ref     { font-size: 16px; font-weight: 700; fill: #fff; }
+      .nm      { font-size: 13px; font-weight: 700; fill: #fff; }
+      .body    { font-size: 13px; font-weight: 400; fill: #222; }
+      .net     { font-size: 12px; font-weight: 700; }
+      .pin     { font-size: 10px; font-weight: 700; }
+      .ntitle  { font-size: 12px; font-weight: 700; letter-spacing: 0.8px; }
+      .note    { font-size: 12px; font-weight: 400; fill: #222; }
+      .flab    { font-size: 9px; font-weight: 700; fill: #444; letter-spacing: 0.8px; }
+      .fval    { font-size: 13px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect class="page" x="0" y="0" width="1680" height="1188"/>
+  <rect class="border" x="18" y="18" width="1644" height="1152"/>
+  <rect class="frame"  x="26" y="26" width="1628" height="1136"/>
+
+  <!-- HEADER -->
+  <rect class="bar" x="26" y="26" width="1628" height="76"/>
+  <text class="h-title" x="48" y="63">DKS-BASIC ESP32 RC CAR &#8212; ELECTRICAL SYSTEM</text>
+  <text class="h-sub"   x="49" y="87">Version 1 &#183; PS4 Bluetooth control &#183; 3S LiPo &#183; sensorless brushless drive</text>
+  <text class="h-sub"   x="1630" y="53" text-anchor="end">SHEET 1 / 1</text>
+  <text class="h-sub"   x="1630" y="87" text-anchor="end">A3 &#183; NTS</text>
+
+  <!-- ================= SECTION A : POWERTRAIN ================= -->
+  <rect class="section" x="40" y="126" width="1600" height="384"/>
+  <rect class="bar" x="40" y="126" width="230" height="24"/>
+  <text class="sec" x="54" y="143">A &#183; POWERTRAIN</text>
+
+  <!-- B1 -->
+  <rect class="box" x="80" y="196" width="200" height="190"/>
+  <rect class="bar" x="80" y="196" width="200" height="28"/>
+  <text class="ref" x="94" y="216">B1</text>
+  <text class="nm"  x="132" y="215">3S LiPo Battery</text>
+  <line class="sym" x1="150" y1="262" x2="150" y2="322"/>
+  <line class="sym" x1="178" y1="250" x2="178" y2="334" stroke-width="4"/>
+  <line class="sym" x1="206" y1="262" x2="206" y2="322"/>
+  <line class="sym" x1="234" y1="250" x2="234" y2="334" stroke-width="4"/>
+  <line class="sym" x1="234" y1="282" x2="280" y2="282"/>
+  <path class="sym" d="M150 322 V352 H280"/>
+  <text class="body" x="185" y="374" text-anchor="middle">11.1 V &#183; 2200 mAh</text>
+  <text class="pin"  x="264" y="277" text-anchor="end">+</text>
+  <text class="pin"  x="264" y="347" text-anchor="end">&#8722;</text>
+
+  <!-- F1 -->
+  <rect class="box" x="360" y="252" width="140" height="60"/>
+  <rect class="bar" x="360" y="252" width="140" height="24"/>
+  <text class="ref" x="374" y="271">F1</text>
+  <text class="nm"  x="410" y="270">30 A FUSE</text>
+  <rect class="sub" x="392" y="285" width="76" height="14"/>
+
+  <!-- SW1 -->
+  <rect class="box" x="560" y="252" width="150" height="60"/>
+  <rect class="bar" x="560" y="252" width="150" height="24"/>
+  <text class="ref" x="574" y="271">SW1</text>
+  <text class="nm"  x="612" y="270">MAIN SWITCH</text>
+  <circle class="symf" cx="582" cy="292" r="3"/>
+  <circle class="symf" cx="688" cy="292" r="3"/>
+  <line class="sym" x1="582" y1="292" x2="680" y2="280"/>
+
+  <!-- ESC1 -->
+  <rect class="box" x="800" y="210" width="300" height="230"/>
+  <rect class="bar" x="800" y="210" width="300" height="30"/>
+  <text class="ref" x="814" y="231">ESC1</text>
+  <text class="nm"  x="1086" y="230" text-anchor="end">BIDIRECTIONAL 50 A ESC</text>
+  <text class="body" x="950" y="270" text-anchor="middle">sensorless &#183; 2&#8211;6S &#183; direct reverse</text>
+  <rect class="sub" x="852" y="292" width="196" height="60"/>
+  <text class="body" x="950" y="320" text-anchor="middle" font-weight="700">UBEC &#183; 5 V / 5 A</text>
+  <text class="body" x="950" y="340" text-anchor="middle">Version 1 logic supply</text>
+  <text class="pin" x="814" y="278">B+</text>
+  <text class="pin" x="814" y="414">B&#8722;</text>
+
+  <!-- M1 -->
+  <rect class="box" x="1180" y="222" width="240" height="206"/>
+  <rect class="bar" x="1180" y="222" width="240" height="28"/>
+  <text class="ref" x="1194" y="242">M1</text>
+  <text class="nm"  x="1232" y="241">MOTOR</text>
+  <circle class="sym" cx="1300" cy="316" r="44" stroke-width="2.5"/>
+  <text x="1300" y="322" font-size="26" font-weight="700" text-anchor="middle">M</text>
+  <text x="1300" y="344" font-size="13" font-weight="700" text-anchor="middle">3~</text>
+  <text class="body" x="1300" y="400" text-anchor="middle">X2212 &#183; KV980</text>
+
+  <!-- Section A wiring -->
+  <path class="w-pwr" d="M280 282 H360"/>
+  <path class="w-pwr" d="M500 282 H560"/>
+  <path class="w-pwr" d="M710 292 H756 V264 H800"/>
+  <text class="net" x="748" y="256" text-anchor="middle">VBAT</text>
+
+  <path class="w-pwr" d="M280 352 H520 V474 H800 V410"/>
+  <text class="net" x="600" y="466" text-anchor="middle">GND</text>
+  <g class="sym">
+    <line x1="660" y1="474" x2="660" y2="490"/>
+    <line x1="649" y1="490" x2="671" y2="490"/>
+    <line x1="653" y1="495" x2="667" y2="495"/>
+    <line x1="657" y1="500" x2="663" y2="500"/>
+  </g>
+
+  <path class="w-pwr" d="M1100 280 H1180"/>
+  <path class="w-pwr" d="M1100 330 H1180"/>
+  <path class="w-pwr" d="M1100 380 H1180"/>
+  <text class="net" x="1140" y="273" text-anchor="middle">U</text>
+  <text class="net" x="1140" y="323" text-anchor="middle">V</text>
+  <text class="net" x="1140" y="373" text-anchor="middle">W</text>
+
+  <!-- ================= SECTION B : CONTROL & LOW VOLTAGE ================= -->
+  <rect class="section" x="40" y="540" width="1600" height="418"/>
+  <rect class="bar" x="40" y="540" width="320" height="24"/>
+  <text class="sec" x="54" y="557">B &#183; CONTROL &amp; LOW VOLTAGE</text>
+
+  <!-- RC1 -->
+  <rect class="box" x="80" y="606" width="260" height="180"/>
+  <rect class="bar" x="80" y="606" width="260" height="28"/>
+  <text class="ref" x="94" y="626">RC1</text>
+  <text class="nm"  x="132" y="625">PS4 CONTROLLER</text>
+  <path class="sym" d="M150 706 C144 676 168 667 192 682 L248 682 C272 667 296 676 290 706
+                       L281 740 C277 754 259 753 250 740 L240 725 H200 L190 740
+                       C181 753 163 754 159 740 Z"/>
+  <line class="sym" x1="174" y1="710" x2="192" y2="710" stroke-width="1.5"/>
+  <line class="sym" x1="183" y1="701" x2="183" y2="719" stroke-width="1.5"/>
+  <circle class="symf" cx="262" cy="700" r="2.6"/>
+  <circle class="symf" cx="271" cy="709" r="2.6"/>
+  <circle class="symf" cx="253" cy="709" r="2.6"/>
+  <circle class="symf" cx="262" cy="718" r="2.6"/>
+
+  <!-- U1 -->
+  <rect class="box" x="900" y="590" width="300" height="210"/>
+  <rect class="bar" x="900" y="590" width="300" height="30"/>
+  <text class="ref" x="914" y="611">U1</text>
+  <text class="nm"  x="1186" y="610" text-anchor="end">ESP32 DEVKIT</text>
+  <rect class="sub" x="985" y="640" width="130" height="52"/>
+  <text class="body" x="1050" y="672" text-anchor="middle" font-weight="700">ESP32</text>
+  <text class="body" x="1050" y="734" text-anchor="middle">Bluetooth Classic + PWM</text>
+  <text class="pin" x="960" y="792" text-anchor="middle">5V</text>
+  <text class="pin" x="1020" y="792" text-anchor="middle">GND</text>
+  <text class="pin" x="910" y="756">IO25</text>
+  <text class="pin" x="1192" y="714" text-anchor="end">IO26</text>
+
+  <!-- SV1 -->
+  <rect class="box" x="1360" y="606" width="180" height="180"/>
+  <rect class="bar" x="1360" y="606" width="180" height="28"/>
+  <text class="ref" x="1374" y="626">SV1</text>
+  <text class="nm"  x="1412" y="625">SERVO</text>
+  <rect class="box" x="1430" y="674" width="72" height="64" stroke-width="1.5"/>
+  <circle class="sym" cx="1466" cy="668" r="12"/>
+  <line class="sym" x1="1446" y1="654" x2="1486" y2="654" stroke-width="4"/>
+  <line class="sym" x1="1466" y1="656" x2="1466" y2="668"/>
+  <text class="body" x="1466" y="762" text-anchor="middle">MG90S</text>
+  <line class="sym" x1="1360" y1="690" x2="1430" y2="690" stroke-width="1.4"/>
+  <line class="sym" x1="1360" y1="720" x2="1430" y2="720" stroke-width="1.4"/>
+  <line class="sym" x1="1360" y1="750" x2="1430" y2="750" stroke-width="1.4"/>
+  <text class="pin" x="1376" y="686">5V</text>
+  <text class="pin" x="1376" y="716">SIG</text>
+  <text class="pin" x="1376" y="746">GND</text>
+
+  <!-- C1 -->
+  <rect class="box" x="690" y="690" width="120" height="96"/>
+  <rect class="bar" x="690" y="690" width="120" height="24"/>
+  <text class="ref" x="704" y="709">C1</text>
+  <line class="sym" x1="712" y1="742" x2="788" y2="742" stroke-width="3"/>
+  <line class="sym" x1="712" y1="756" x2="788" y2="756" stroke-width="3"/>
+  <line class="sym" x1="720" y1="742" x2="720" y2="786" stroke-width="1.4"/>
+  <line class="sym" x1="780" y1="756" x2="780" y2="786" stroke-width="1.4"/>
+  <text class="pin" x="706" y="737">+</text>
+  <text class="body" x="750" y="776" text-anchor="middle">1000 &#181;F</text>
+
+  <!-- TB1 : 5 V bus block -->
+  <rect class="box" x="430" y="856" width="170" height="86"/>
+  <rect class="bar" x="430" y="856" width="170" height="24"/>
+  <text class="ref" x="444" y="875">TB1</text>
+  <text class="nm"  x="482" y="874">5 V BUS</text>
+
+  <!-- Low-voltage bus -->
+  <path class="w-5v"  d="M380 892 H430"/>
+  <path class="w-5v"  d="M600 892 H1520"/>
+  <path class="w-pwr" d="M380 920 H430"/>
+  <path class="w-pwr" d="M600 920 H1520"/>
+  <text class="net" x="372" y="888" text-anchor="end">+5 V</text>
+  <text class="net" x="372" y="924" text-anchor="end">GND</text>
+
+  <!-- C1 to bus -->
+  <path class="w-5v"  d="M720 786 V892"/>
+  <path class="w-pwr" d="M780 786 V920"/>
+  <circle class="node" cx="720" cy="892" r="4"/>
+  <circle class="node" cx="780" cy="920" r="4"/>
+
+  <!-- ESC1 UBEC feed to bus + PWM to U1 -->
+  <path class="w-5v"  d="M824 440 V892"/>
+  <path class="w-pwr" d="M852 440 V920"/>
+  <path class="w-sig" d="M880 440 V760 H900"/>
+  <circle class="node" cx="824" cy="892" r="4"/>
+  <circle class="node" cx="852" cy="920" r="4"/>
+
+  <!-- U1 power taps -->
+  <path class="w-5v"  d="M960 800 V892"/>
+  <path class="w-pwr" d="M1020 800 V920"/>
+  <circle class="node" cx="960" cy="892" r="4"/>
+  <circle class="node" cx="1020" cy="920" r="4"/>
+
+  <!-- Steering signal -->
+  <path class="w-sig" d="M1200 720 H1360"/>
+  <text class="net" x="1282" y="712" text-anchor="middle">STEER PWM</text>
+
+  <!-- SV1 power taps -->
+  <path class="w-5v"  d="M1360 694 H1338 V892"/>
+  <path class="w-pwr" d="M1360 746 H1318 V920"/>
+  <circle class="node" cx="1338" cy="892" r="4"/>
+  <circle class="node" cx="1318" cy="920" r="4"/>
+
+  <!-- Wireless link -->
+  <path class="w-radio" d="M340 706 C560 600 780 588 985 660"/>
+  <text class="net" x="640" y="600" text-anchor="middle">BT CLASSIC</text>
+
+  <!-- ================= BOTTOM STRIP : KEY + NOTES ================= -->
+  <rect class="frame" x="40" y="978" width="1600" height="120"/>
+  <line class="frame" x1="420" y1="978" x2="420" y2="1098"/>
+
+  <text class="ntitle" x="56" y="1000">WIRE KEY</text>
+  <path class="w-pwr"   d="M58 1020 H108"/><text class="note" x="118" y="1024">Power &amp; ground</text>
+  <path class="w-5v"    d="M58 1044 H108"/><text class="note" x="118" y="1048">+5 V logic rail</text>
+  <path class="w-sig"   d="M58 1068 H108"/><text class="note" x="118" y="1072">Signal (PWM)</text>
+  <path class="w-radio" d="M240 1068 H290"/><text class="note" x="300" y="1072">Wireless link</text>
+
+  <text class="ntitle" x="440" y="1000">SAFETY &amp; START-UP</text>
+  <text class="note" x="440" y="1022">1. Disconnect B1 before wiring or USB. Never connect the 3S rail to U1, SV1 or the 5 V bus.</text>
+  <text class="note" x="440" y="1046">2. Firmware must hold neutral throttle (~1500 &#181;s) until ESC1 is armed, and on any loss of the controller link.</text>
+  <text class="note" x="440" y="1070">3. Commission with wheels raised at low throttle. To reverse direction, disconnect B1 and swap any two motor phases.</text>
+
+  <!-- ================= TITLE BLOCK ================= -->
+  <rect class="frame" x="40" y="1108" width="1600" height="30"/>
+  <line class="frame" x1="540"  y1="1108" x2="540"  y2="1138"/>
+  <line class="frame" x1="900"  y1="1108" x2="900"  y2="1138"/>
+  <line class="frame" x1="1130" y1="1108" x2="1130" y2="1138"/>
+  <line class="frame" x1="1320" y1="1108" x2="1320" y2="1138"/>
+  <line class="frame" x1="1480" y1="1108" x2="1480" y2="1138"/>
+  <text class="flab" x="52"   y="1122">PROJECT</text>
+  <text class="fval" x="52"   y="1134">DKS-Basic ESP32 RC Car</text>
+  <text class="flab" x="552"  y="1122">DRAWING</text>
+  <text class="fval" x="552"  y="1134">Electrical System</text>
+  <text class="flab" x="912"  y="1122">DOC</text>
+  <text class="fval" x="912"  y="1134">RC-CAR-ELEC-V1</text>
+  <text class="flab" x="1142" y="1122">REV</text>
+  <text class="fval" x="1142" y="1134">1.1</text>
+  <text class="flab" x="1332" y="1122">DATE</text>
+  <text class="fval" x="1332" y="1134">2026-08-27</text>
+  <text class="flab" x="1492" y="1122">STATUS</text>
+  <text class="fval" x="1492" y="1134">RELEASE</text>
+</svg>

@@ -17,10 +17,11 @@
 $fn = 120;
 
 part = "spur_pinion";
-// spur_pinion, spur_gear2, herringbone_pinion, herringbone_gear2,
+// spur_pinion, spur_pinion_m3, spur_gear2,
+// herringbone_pinion, herringbone_pinion_m3, herringbone_gear2,
 // preview_spur, preview_herringbone
 
-original_gear2 = "../../Single Pieces/Single Pieces/DKS-Basic_DukeDoks_Gear-2.stl";
+original_gear2 = "../../DKS_Basic_Chassis/STL/DKS-Basic_DukeDoks_Gear-2.stl";
 
 // Matched tooth system.
 module_size = 1.03;
@@ -41,6 +42,24 @@ pinion_total_h = 9.0;
 tooth_face_h = 8.0;
 pinion_collar_d = 12.8;
 gear2_total_h = 15.0006;
+
+// Balanced M3x8 flexure-clamp option. The 8 mm tooth face seats against the
+// motor and a 6 mm collar clamps the M6 threaded output section. Two opposing
+// socket-head screws keep the rotating pinion balanced; no nuts are needed.
+m3_pinion_total_h = 14.0;
+m3_clamp_start_z = tooth_face_h;
+m3_clamp_h = m3_pinion_total_h - tooth_face_h;
+m3_clamp_outer_d = 16.0;
+m3_threaded_shaft_bore_d = 6.30;
+m3_clearance_d = 3.40;
+m3_thread_pilot_d = 2.80;
+m3_socket_head_d = 5.80;
+m3_axis_z = m3_clamp_start_z + m3_clamp_h / 2;
+m3_axis_x = 4.80;
+m3_head_seat_y = -3.40;
+m3_thread_end_y = 4.60;
+flexure_slot_w = 0.80;
+flexure_slot_end_x = 6.10;
 
 // The replacement Gear-2 rim overlaps the retained original core by 0.75 mm.
 // All axle, screw and hub features lie well inside this protected diameter.
@@ -134,20 +153,81 @@ module retained_gear2_core() {
     }
 }
 
+module spur_pinion_body() {
+    union() {
+        linear_extrude(height = tooth_face_h, convexity = 12)
+            gear_profile_2d(pinion_teeth, pinion_profile_shift);
+
+        // Non-meshing motor-side collar preserves the 9 mm total length.
+        translate([0, 0, tooth_face_h - eps])
+            cylinder(d = pinion_collar_d,
+                     h = pinion_total_h - tooth_face_h + eps);
+    }
+}
+
+module cylinder_along_y(diameter, y0, y1, x, z) {
+    translate([x, (y0 + y1) / 2, z])
+        rotate([90, 0, 0])
+            cylinder(d = diameter, h = abs(y1 - y0), center = true, $fn = 48);
+}
+
+module one_m3_flexure_cut() {
+    // Blind-ended radial slit through the clamp collar only. It opens into the
+    // 6.30 mm thread-section bore and leaves an outer flexure bridge.
+    hull()
+        for (x = [m3_threaded_shaft_bore_d / 2 - 0.20,
+                  flexure_slot_end_x])
+            translate([x, 0, m3_clamp_start_z - eps])
+                cylinder(d = flexure_slot_w,
+                         h = m3_clamp_h + 2 * eps, $fn = 24);
+
+    // Flush socket-head recess and clearance through the near clamp arm.
+    cylinder_along_y(m3_socket_head_d, -9.0, m3_head_seat_y,
+                     m3_axis_x, m3_axis_z);
+    cylinder_along_y(m3_clearance_d, m3_head_seat_y - eps, 0.65,
+                     m3_axis_x, m3_axis_z);
+
+    // The M3x8 screw forms its own thread in this deliberately undersized hole.
+    cylinder_along_y(m3_thread_pilot_d, 0.35, m3_thread_end_y,
+                     m3_axis_x, m3_axis_z);
+}
+
+module m3_flexure_clamp_cuts() {
+    // The tooth face locates on the 7.85 mm smooth boss.
+    translate([0, 0, -eps])
+        cylinder(d = pinion_bore_d,
+                 h = m3_clamp_start_z + 2 * eps);
+
+    // The smaller stepped bore surrounds and clamps the external M6 thread.
+    translate([0, 0, m3_clamp_start_z - eps])
+        cylinder(d = m3_threaded_shaft_bore_d,
+                 h = m3_clamp_h + 2 * eps);
+
+    // The second clamp is an exact 180-degree copy for rotational balance.
+    for (angle = [0, 180])
+        rotate([0, 0, angle])
+            one_m3_flexure_cut();
+}
+
 module smooth_spur_pinion() {
+    difference() {
+        spur_pinion_body();
+
+        translate([0, 0, -eps])
+            cylinder(d = pinion_bore_d, h = pinion_total_h + 2 * eps);
+    }
+}
+
+module smooth_spur_pinion_m3() {
     difference() {
         union() {
             linear_extrude(height = tooth_face_h, convexity = 12)
                 gear_profile_2d(pinion_teeth, pinion_profile_shift);
 
-            // Non-meshing motor-side collar preserves the 9 mm total length.
-            translate([0, 0, tooth_face_h - eps])
-                cylinder(d = pinion_collar_d,
-                         h = pinion_total_h - tooth_face_h + eps);
+            translate([0, 0, m3_clamp_start_z - eps])
+                cylinder(d = m3_clamp_outer_d, h = m3_clamp_h + eps);
         }
-
-        translate([0, 0, -eps])
-            cylinder(d = pinion_bore_d, h = pinion_total_h + 2 * eps);
+        m3_flexure_clamp_cuts();
     }
 }
 
@@ -191,23 +271,44 @@ module herringbone_profile(teeth, shift, hand = 1, inner_d = 0) {
                     gear_profile_2d(teeth, shift);
 }
 
+module herringbone_pinion_body() {
+    union() {
+        herringbone_profile(pinion_teeth, pinion_profile_shift, 1);
+
+        // Root-only bridge across the 0.8 mm center relief.
+        translate([0, 0, herringbone_half_h - eps])
+            cylinder(r = root_r(pinion_teeth, pinion_profile_shift),
+                     h = herringbone_center_relief + 2 * eps);
+
+        translate([0, 0, tooth_face_h - eps])
+            cylinder(d = pinion_collar_d,
+                     h = pinion_total_h - tooth_face_h + eps);
+    }
+}
+
 module smooth_herringbone_pinion() {
+    difference() {
+        herringbone_pinion_body();
+
+        translate([0, 0, -eps])
+            cylinder(d = pinion_bore_d, h = pinion_total_h + 2 * eps);
+    }
+}
+
+module smooth_herringbone_pinion_m3() {
     difference() {
         union() {
             herringbone_profile(pinion_teeth, pinion_profile_shift, 1);
 
-            // Root-only bridge across the 0.8 mm center relief.
+            // Root-only bridge across the herringbone center relief.
             translate([0, 0, herringbone_half_h - eps])
                 cylinder(r = root_r(pinion_teeth, pinion_profile_shift),
                          h = herringbone_center_relief + 2 * eps);
 
-            translate([0, 0, tooth_face_h - eps])
-                cylinder(d = pinion_collar_d,
-                         h = pinion_total_h - tooth_face_h + eps);
+            translate([0, 0, m3_clamp_start_z - eps])
+                cylinder(d = m3_clamp_outer_d, h = m3_clamp_h + eps);
         }
-
-        translate([0, 0, -eps])
-            cylinder(d = pinion_bore_d, h = pinion_total_h + 2 * eps);
+        m3_flexure_clamp_cuts();
     }
 }
 
@@ -251,10 +352,14 @@ module pair_preview(herringbone = false) {
 
 if (part == "spur_pinion")
     smooth_spur_pinion();
+else if (part == "spur_pinion_m3")
+    smooth_spur_pinion_m3();
 else if (part == "spur_gear2")
     smooth_spur_gear2();
 else if (part == "herringbone_pinion")
     smooth_herringbone_pinion();
+else if (part == "herringbone_pinion_m3")
+    smooth_herringbone_pinion_m3();
 else if (part == "herringbone_gear2")
     smooth_herringbone_gear2();
 else if (part == "preview_spur")
