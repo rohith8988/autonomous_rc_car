@@ -1,0 +1,23 @@
+# ROS 2 / colcon
+build/
+install/
+log/
+
+# Arduino / ESP32 firmware build output
+**/build/
+*.hex
+*.elf
+*.bin
+
+# OpenSCAD
+*.scad~
+*.csg
+*.echo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
