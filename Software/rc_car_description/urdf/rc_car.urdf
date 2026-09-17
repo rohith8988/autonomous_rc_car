@@ -11,6 +11,27 @@
   and weigh the real car before trusting dynamics results.
     wheelbase 0.258 m   track 0.176 m   wheel r 0.033 m
     steering +/-0.52 rad     final drive 3.0:1 (14T/42T)
+
+  ALIGNMENT CORRECTED against Hardware/Mechanical/DKS_Basic_Chassis/build_guide.pdf
+  by rebuilding the assembly in FreeCAD and fitting every printed part on its
+  actual screw-hole axes (detected from the STL meshes, not eyeballed).
+  All 16 build-guide mates are now coaxial to <=0.001 mm. Changes:
+    * chassis group z  -0.0201 -> -0.0181  (+2.0 mm; the value already used for
+      Rear-Frame-Lower). This is what put the front axle at the wrong height.
+    * front steering knuckles were tilted 6.60 deg off vertical - re-solved so the
+      kingpin bore is coaxial with the front-bar holes at (0.129, +-0.070) and the
+      steering-arm clevis straddles the tie rod.
+    * X2212 motor mount   y -0.0392 -> -0.0400  (0.8 mm)
+    * A_Front-Frame       re-fitted (0.25 mm)
+    FRONT END RECHECK:
+    * front stub axles: the two Wheel-Axis halves were 3.39 mm apart in z instead
+      of meeting on the shaft axis. Both re-seated so their flat split faces are
+      coplanar at z=33.000 - the pair now forms a true 7.84 mm round shaft
+      concentric with the hub bearing bore and the Wheel-Axis-Nut.
+    * A_Front-Bars-Upper was flipped: its M3 counterbore faced away from the
+      knuckle. Rotated 180 deg about X - bbox and all mates unchanged, counterbore
+      now seats the knuckle boss.
+  Front axle bore, stub axle, tyre centre and rear axle all read 33.000 mm.
 -->
 <robot name="rc_car">
 
@@ -21,6 +42,8 @@
   <material name="motor"><color rgba="0.10 0.10 0.12 1.0"/></material>
   <material name="gear"><color rgba="0.90 0.55 0.10 1.0"/></material>
   <material name="servo"><color rgba="0.10 0.35 0.75 1.0"/></material>
+  <material name="deck"><color rgba="0.20 0.55 0.35 1.0"/></material>
+  <material name="standoff"><color rgba="0.85 0.65 0.15 1.0"/></material>
 
   <!-- ===== FRAME: base_footprint (ground) -> base_link (mid-wheelbase, axle height) ===== -->
   <!-- ground-projected frame; spawn at z=0 to rest on the floor.
@@ -55,57 +78,57 @@
       <geometry><box size="0.025 0.16 0.0099"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Chassis-1.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Chassis-2_A.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Body_L.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Body_R.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Front-Bars.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Bumper.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Rear-Flex-1.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Rear-Flex-2.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 -0.0181" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Clamp.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.1875 0 -0.1386" rpy="-1.570796 0 1.570796"/>
+      <origin xyz="0.1875 0 -0.1366" rpy="-1.570796 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Front-Case-Holder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="-0.1405 0 0.1694" rpy="-1.570796 0 1.570796"/>
+      <origin xyz="-0.1405 0 0.1714" rpy="-1.570796 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Clamp-Case-Holder.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
@@ -125,24 +148,99 @@
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 -0.0392 -0.02907" rpy="-1.570796 1.570796 0"/>
+      <origin xyz="0.009 -0.04 -0.02907" rpy="-1.570796 1.570796 0"/>
       <geometry><mesh filename="package://rc_car_description/meshes/X2212_Rear_Frame_A_OnePiece.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.202563 -0.050319 -0.0196" rpy="0 0 1.570796"/>
+      <origin xyz="0.202563 -0.050319 -0.0176" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Front-Bars-Lower.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.135 0 0.13415" rpy="1.570796 0 1.570796"/>
+      <origin xyz="0.13525 0 0.13615" rpy="1.570796 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_A_Front-Frame.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
     </visual>
     <visual>
-      <origin xyz="0.009 0 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="0.009 0 0.0419" rpy="3.141593 0 -1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_A_Front-Bars-Upper.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="chassis"/>
+    </visual>
+  </link>
+
+
+  <!-- ===== SENSOR DECK (autonomy payload) =====
+       Printed top cover that closes the electronics bay and carries the
+       autonomy payload. Seats on the two body top rails at z=46.90 mm and
+       bolts to 8 printed 28 mm standoffs that use the chassis' spare M3
+       holes (x = -41, -11, 29, 59 mm, y = +/-30 mm) - no holes drilled in
+       any existing part.
+
+       FRAME: origin is the deck TOP surface, on the car centreline.
+       Mount sensors as children of this link with +z up. The M3 grid is at
+       x = 0.009 + 0.010k, y = 0.010k (metres). Two fore-aft T-slots at
+       y = +/-0.020 take standard M3 hex nuts, slid in from the rear edge.
+       MASS IS AN ESTIMATE: 0.080 kg from the modelled volume at PLA 1.24
+       g/cm3 and ~70% effective density. Weigh the printed part. -->
+  <joint name="sensor_deck_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="sensor_deck"/>
+    <origin xyz="0 0 0.0179"/>
+  </joint>
+  <link name="sensor_deck">
+    <inertial>
+      <origin xyz="0.00025 0 -0.008"/>
+      <mass value="0.080"/>
+      <inertia ixx="1.132e-04" ixy="0" ixz="0" iyy="1.556e-04" iyz="0" izz="2.677e-04"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.00025 0 -0.002"/>
+      <geometry><box size="0.1525 0.130 0.004"/></geometry>
+    </collision>
+    <visual>
+      <geometry><mesh filename="package://rc_car_description/meshes/Sensor_Deck.stl" scale="0.001 0.001 0.001"/></geometry>
+      <material name="deck"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.041 0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.041 -0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.011 0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.011 -0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
+    </visual>
+    <visual>
+      <origin xyz="0.029 0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
+    </visual>
+    <visual>
+      <origin xyz="0.029 -0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
+    </visual>
+    <visual>
+      <origin xyz="0.059 0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
+    </visual>
+    <visual>
+      <origin xyz="0.059 -0.030 -0.018"/>
+      <geometry><cylinder radius="0.0045" length="0.028"/></geometry>
+      <material name="standoff"/>
     </visual>
   </link>
 
@@ -171,7 +269,7 @@
       <geometry><box size="0.02 0.03 0.03"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.068406 -0.013001 -0.037902" rpy="1.570796 1.4559 3.141593"/>
+      <origin xyz="0.073847 0.001721 -0.024662" rpy="-1.26291 1.570556 0.436841"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Wheel-Hub_mirrored.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
@@ -204,12 +302,12 @@
       <material name="rim"/>
     </visual>
     <visual>
-      <origin xyz="-0.12 -0.088 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="-0.12 -0.088 -0.018" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Wheel-Axis.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
     <visual>
-      <origin xyz="0.12 -0.088 0.0201" rpy="3.141593 0 1.570796"/>
+      <origin xyz="0.12 -0.088 0.018" rpy="-3.141592 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Wheel-Axis.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
@@ -243,7 +341,7 @@
       <geometry><box size="0.02 0.03 0.03"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.068406 0.013001 -0.037902" rpy="1.570796 -1.4559 0"/>
+      <origin xyz="0.073847 -0.001721 -0.024662" rpy="-1.262955 -1.570556 2.704797"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Wheel-Hub.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
@@ -266,27 +364,27 @@
       <geometry><cylinder radius="0.033" length="0.026"/></geometry>
     </collision>
     <visual>
-      <origin xyz="-0.013 0.033 0" rpy="-1.570796 0 3.141593"/>
+      <origin xyz="-0.013 0.033 0" rpy="-1.570796 0 -3.141592"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Basic-Wheel-01-Tire.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="tyre"/>
     </visual>
     <visual>
-      <origin xyz="-0.013 0.0264 0" rpy="-1.570796 0 3.141593"/>
+      <origin xyz="-0.013 0.0264 0" rpy="-1.570796 0 -3.141592"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Basic-Wheel-01-Wheel.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="rim"/>
     </visual>
     <visual>
-      <origin xyz="-0.12 0.088 -0.0201" rpy="0 0 1.570796"/>
+      <origin xyz="-0.12 0.088 -0.018" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Wheel-Axis_mirrored.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
     <visual>
-      <origin xyz="0.12 0.088 0.0201" rpy="3.141593 0 1.570796"/>
+      <origin xyz="0.12 0.088 0.018" rpy="-3.141592 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Wheel-Axis_mirrored.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
     <visual>
-      <origin xyz="0.079563 0.058497 -0.031663" rpy="-1.570796 0 3.141593"/>
+      <origin xyz="0.079563 0.058497 -0.031663" rpy="-1.570796 0 -3.141592"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Wheel-Axis-Nut.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
@@ -356,7 +454,7 @@
       <geometry><box size="0.012 0.131 0.002"/></geometry>
     </collision>
     <visual>
-      <origin xyz="-0.09666 0 -0.018" rpy="0 0 1.570796"/>
+      <origin xyz="-0.09666 0 -0.015903" rpy="0 0 1.570796"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_A_Steering.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="steer"/>
     </visual>
@@ -407,7 +505,7 @@
       <geometry><cylinder radius="0.0084" length="0.014"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0 0.0045 0" rpy="-1.570796 0 3.141593"/>
+      <origin xyz="0 0.0045 0" rpy="-1.570796 0 -3.141592"/>
       <geometry><mesh filename="package://rc_car_description/meshes/X2212_Smooth_Herringbone_Gear_1_14T_M3_Clamp.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="gear"/>
     </visual>
@@ -490,12 +588,12 @@
       <geometry><cylinder radius="0.033" length="0.026"/></geometry>
     </collision>
     <visual>
-      <origin xyz="-0.013 0.033 0" rpy="-1.570796 0 3.141593"/>
+      <origin xyz="-0.013 0.033 0" rpy="-1.570796 0 -3.141592"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Basic-Wheel-01-Tire.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="tyre"/>
     </visual>
     <visual>
-      <origin xyz="-0.013 0.0264 0" rpy="-1.570796 0 3.141593"/>
+      <origin xyz="-0.013 0.0264 0" rpy="-1.570796 0 -3.141592"/>
       <geometry><mesh filename="package://rc_car_description/meshes/DKS-Basic_DukeDoks_Basic-Wheel-01-Wheel.stl" scale="0.001 0.001 0.001"/></geometry>
       <material name="rim"/>
     </visual>
@@ -509,6 +607,7 @@
        model a tyre's different longitudinal vs lateral grip.
        Calibrate against the real car before trusting handling. -->
   <gazebo reference="base_link"><mu1>0.2</mu1><mu2>0.2</mu2></gazebo>
+  <gazebo reference="sensor_deck"><mu1>0.3</mu1><mu2>0.3</mu2></gazebo>
   <gazebo reference="front_left_wheel"><mu1>1.2</mu1><mu2>1.2</mu2><kp>1e6</kp><kd>100</kd></gazebo>
   <gazebo reference="front_right_wheel"><mu1>1.2</mu1><mu2>1.2</mu2><kp>1e6</kp><kd>100</kd></gazebo>
   <gazebo reference="rear_left_wheel"><mu1>1.4</mu1><mu2>1.4</mu2><kp>1e6</kp><kd>100</kd></gazebo>

@@ -8,7 +8,7 @@ find_package(ament_cmake REQUIRED)
 # package://rc_car_description/meshes/..., so without this an installed
 # package has dead mesh references.
 install(
-  DIRECTORY urdf launch config tools meshes
+  DIRECTORY urdf launch config meshes
   DESTINATION share/${PROJECT_NAME}
 )
 

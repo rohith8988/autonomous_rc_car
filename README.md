@@ -3,6 +3,11 @@
 DKS-Basic ESP32 RC car: PS4 controller over Bluetooth Classic, ESC + steering
 servo, custom motor mount, and a ROS 2 URDF/simulation bringup.
 
+<p align="center">
+  <img src="assets/cad_front.png" alt="DKS-Basic CAD assembly, front 3/4 view" width="49%">
+  <img src="assets/cad_back.png" alt="DKS-Basic CAD assembly, rear 3/4 view" width="49%">
+</p>
+
 ## Structure
 
 - `Hardware/Electronics/` — wiring diagram, BOM, electrical schematics

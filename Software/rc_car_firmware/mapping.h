@@ -1,7 +1,7 @@
 #pragma once
 
 // --- Tuning knobs. Real servos and ESCs never match the numbers on paper. ---
-constexpr float THROTTLE_LIMIT    = 0.50f;  // fraction of full throttle. 1.0 is the full 980 KV on 3S.
+constexpr float THROTTLE_LIMIT    = 0.1f;  // fraction of full throttle. 1.0 is the full 980 KV on 3S.
 constexpr int   THROTTLE_DEADBAND = 40;     // stick counts around centre treated as zero
 constexpr int   STEER_TRIM_US     = 0;      // startup default only; the D-pad overrides and saves it
 constexpr int   STEER_TRIM_MAX    = 150;    // clamp, so trim can never drive the linkage into its stops
