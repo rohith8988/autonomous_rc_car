@@ -1,9 +1,0 @@
-{
-  // rc_car.urdf refers to its meshes as
-  //   package://rc_car_description/meshes/<part>.stl
-  // so the URDF Visualizer needs to know where that package root lives.
-  // Paths are relative to the workspace root (/workspace/rc_car_project).
-  "urdf-visualizer.packages": {
-    "rc_car_description": "Software/rc_car_description"
-  }
-}
