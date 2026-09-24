@@ -19,7 +19,7 @@ void onDisconnected(ControllerPtr ctl) { if (gamepad == ctl) gamepad = nullptr; 
 // D-pad left/right walks the steering centre and stores it. Bluepad32 dpad bits: up 1, down 2, right 4, left 8.
 void nudgeTrim(uint8_t dpad) {
   static uint32_t last = 0;
-  if (millis() - last < 150) return;                  // repeat rate, also debounces the pad
+  if (millis() - last < STEER_TRIM_REPEAT_MS) return;  // repeat rate, also debounces the pad
   int delta = (dpad & 0x08) ? -STEER_TRIM_STEP : (dpad & 0x04) ? STEER_TRIM_STEP : 0;
   if (!delta) return;
   last = millis();
@@ -41,7 +41,7 @@ void setup() {
   int steerCh = steer.attach(STEER_PIN, 500, 2500);
   Serial.printf("attach: esc ch=%d steer ch=%d\n", escCh, steerCh);   // 0 means the pin did not attach
   esc.writeMicroseconds(NEUTRAL_US);
-  steer.writeMicroseconds(NEUTRAL_US + steerTrim);
+  steer.writeMicroseconds(NEUTRAL_US + steerTrim);  // saved trim is the real centre, not raw 1500
   delay(3000);                        // ESC arms only after a steady neutral
   BP32.setup(&onConnected, &onDisconnected);
   // BP32.forgetBluetoothKeys();      // uncomment for one flash if the controller refuses to pair
@@ -49,7 +49,7 @@ void setup() {
 
 void loop() {
   BP32.update();
-  int th = NEUTRAL_US, st = NEUTRAL_US + steerTrim;      // failsafe: no controller, no motion
+  int th = NEUTRAL_US, st = NEUTRAL_US + steerTrim;      // failsafe: no controller, holds calibrated centre
   int ry = 0, ax = 0;
   bool linked = gamepad && gamepad->isConnected();
   if (linked) {
@@ -68,7 +68,7 @@ void loop() {
   static uint32_t last = 0;           // 4 Hz telemetry, the only view into what the ESC is being told
   if (millis() - last > 250) {
     last = millis();
-    Serial.printf("pad=%d ry=%d ax=%d th=%d st=%d trim=%d\n", linked, ry, ax, th, st, steerTrim);
+    Serial.printf("pad=%d dpad=%d ry=%d ax=%d th=%d st=%d trim=%d\n", linked, linked ? gamepad->dpad() : 0, ry, ax, th, st, steerTrim);
   }
   delay(20);                          // 50 Hz
 }
